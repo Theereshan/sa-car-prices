@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:16
+    container_name: sa-car-prices-db
+    environment:
+      POSTGRES_USER: cars
+      POSTGRES_PASSWORD: cars
+      POSTGRES_DB: cars
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Runs schema.sql automatically on first start
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+
+volumes:
+  pgdata:
