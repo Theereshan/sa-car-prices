@@ -23,6 +23,13 @@ Used-car prices in SA vary widely for similar vehicles. Buyers can't easily tell
 Raw and clean layers are kept separate on purpose: cleaning rules change constantly, and the raw data can always be re-cleaned.
 
 ## Quick start
+
+### Option A: GitHub Codespaces (nothing to install)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Theereshan/sa-car-prices)
+
+Python, Postgres and the sample data are set up automatically. When the terminal says **✅ Ready**, open `notebooks/01_eda.ipynb` and click **Run All**.
+
+### Option B: Local
 ```bash
 # 1. Environment
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate

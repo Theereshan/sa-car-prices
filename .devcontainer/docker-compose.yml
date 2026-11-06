@@ -1,0 +1,31 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/python:3.12
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    # Share the db container's network so Postgres is reachable on localhost,
+    # exactly like the local docker-compose setup (no config changes needed).
+    network_mode: service:db
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cars
+      POSTGRES_PASSWORD: cars
+      POSTGRES_DB: cars
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../sql/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cars -d cars"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:
